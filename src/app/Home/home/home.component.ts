@@ -8,6 +8,7 @@ import {
 import { liste_statistique } from '../../data/liste_statistique.model';
 import { ListeStatServiceService } from '../../services/liste-stat-service.service';
 import { Router } from '@angular/router';
+import { StatistiquesResponse } from '../../data/statistiqueReponse.model';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   readonly router = inject(Router);
   readonly listeservice = inject(ListeStatServiceService);
+  resultats: StatistiquesResponse | null = null;
   inputEmpty = signal('');
   valueList = computed(() => {
     const data = this.inputEmpty();
@@ -43,8 +45,15 @@ export class HomeComponent {
     const listTosend = new liste_statistique(this.valueList());
     console.log(listTosend);
     console.log('submit');
-    this.listeservice.SendList(listTosend).subscribe((x) => {
-      this.router.navigate(['/Home/']);
+    this.listeservice.SendList(listTosend).subscribe({
+      next: (response) => {
+        this.resultats = response; // Stocker la réponse
+        console.log("Réponse de l'API:", response);
+        this.router.navigate(['/Home/']); // Rediriger si nécessaire
+      },
+      error: (error) => {
+        console.error("Erreur lors de l'envoi des données:", error);
+      },
     });
   }
 

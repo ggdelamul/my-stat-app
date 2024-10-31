@@ -1,9 +1,9 @@
 export class liste_statistique 
 {
-    liste_stat: number[];
+    donnees: number[];
 
     constructor(liste_stat: number[])
     {
-        this.liste_stat = liste_stat;
+        this.donnees = liste_stat;
     }
 }
