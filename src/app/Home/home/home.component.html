@@ -1,0 +1,6 @@
+<h2>Saisissez votre série statistique</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Séries(séparer chaque valeur par des virgules)</label>
+    <input type="text" formControlName="input">
+    <button>Envoyer</button>
+</form>
